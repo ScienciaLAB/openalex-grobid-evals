@@ -17,9 +17,8 @@ maintains cumulative statistics until stopped.
 ## Deploy
 
 ```bash
-scp grobid-openalex-eval.tar.gz  <server>:
 ssh <server>
-tar xzf grobid-openalex-eval.tar.gz && cd server-bundle
+git clone git@github.com:ScienciaLAB/openalex-grobid-evals.git && cd openalex-grobid-evals
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 ./setup_grobid.sh          # clone + build GROBID master (~10 min first time)
 ./run_server.sh            # start GROBID on :8070, waits until healthy
