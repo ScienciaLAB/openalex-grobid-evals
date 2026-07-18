@@ -216,3 +216,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# pipeline runtime outputs
+pdfs/
+tei/
+*.log
+*.pid
+state.json
+stats.json
+fetch_log.json
+works_metadata.jsonl
+grobid_extractions.json
+comparison.json
+flagged_cases.json
+SUMMARY.md
+STOP
