@@ -35,7 +35,7 @@ BATCH_SIZE = int(os.environ.get("BATCH_SIZE", "1000"))
 MAILTO = os.environ.get("MAILTO", "luca@sciencialab.com")
 API_URL = "https://api.openalex.org/works"
 FILTER = "type:preprint,authorships.institutions.lineage:null,open_access.is_oa:true"
-SELECT = "id,doi,title,authorships,best_oa_location,primary_location,locations"
+SELECT = "id,doi,title,authorships,best_oa_location,primary_location,locations,primary_topic"
 PER_PAGE = 200
 DOWNLOAD_TIMEOUT = 30
 MAX_PDF_BYTES = 30 * 1024 * 1024
@@ -71,12 +71,17 @@ def work_record(work, pdf_url):
             "raw_author_name": a.get("raw_author_name"),
             "raw_affiliation_strings": a.get("raw_affiliation_strings") or [],
         })
+    pt = work.get("primary_topic") or {}
+    source = (((work.get("primary_location") or {}).get("source")) or {}).get("display_name")
     return {
         "id": work["id"],
         "work_id": work["id"].rsplit("/", 1)[-1],
         "doi": work.get("doi"),
         "title": work.get("title"),
         "pdf_url": pdf_url,
+        "source": source,
+        "field": ((pt.get("field") or {}).get("display_name")),
+        "domain": ((pt.get("domain") or {}).get("display_name")),
         "authorships": authorships,
     }
 
